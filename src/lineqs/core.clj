@@ -21,7 +21,7 @@
       (recur (m/sum-rows mat col r (- (m/get-value mat r col))) (dec r)))))
 
 (defn gauss-method
-  "Set the diagonal to 1 and both triangles to 0"
+  "Set the diagonal to 1 and both triangles to 0."
   [matrix]
   (loop [mat matrix
          col 1]
@@ -31,22 +31,9 @@
             up (clear-column-up down col)]
         (recur up (inc col))))))
 
-(defn print-roots
-  "Print roots found by the Gaussian method."
-  [matrix]
-  (print "Roots = {")
-  (dotimes [r (count matrix)]
-    (if (< r (dec (count matrix)))
-      (print (str (m/get-value matrix (inc r) (inc (count matrix))) ", "))
-      (print (str (m/get-value matrix (inc r) (inc (count matrix))) "}")))))
-
-(def test-mat [[2 -3 2, 2]
-               [-1 -4 -3, -18]
-               [3 5 -1, 10]]) ; Solution: x = 1, y = 2, z = 3
-
 
 (defn -main
-  "I don't do a whole lot."
+  "The main function."
   [& args]
   (let [filename (first args)
         matrix (io/read-matrix filename)]
