@@ -16,8 +16,10 @@
   "Check if the matrix is a system of linear equations."
   [matrix]
   (let [rows (count matrix)
-        bad-eqs (filter #(not= (count %) (inc rows)) matrix)]
-    (empty? bad-eqs)))
+        zero-diagonal (filter #(= % 0) (map #(nth % %2) matrix (range 0 (count matrix))))
+        bad-eqs (filter #(not= (count %) (inc rows)) matrix)
+        bad-nums (some #(not (number? %)) (apply concat matrix))]
+    (and (empty? bad-eqs) (empty? zero-diagonal) (nil? bad-nums))))
 
 (defn multiply-row
   "Multiply the [row] in the [mat]rix by the [number]."
