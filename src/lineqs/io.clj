@@ -16,7 +16,11 @@
   [matrix]
   (loop [text "Roots = {"
          r 1]
-    (cond
-      (= r (count matrix)) (recur (str text (m/get-value matrix r (inc (count matrix))) "}") (inc r))
-      (= r (inc (count matrix))) (println text)
-      :else (recur (str text (m/get-value matrix r (inc (count matrix))) ", ") (inc r)))))
+    (if (> r (count matrix))
+      (println text)
+      (let [root (m/get-value matrix r (inc (count matrix)))
+            new-text (str text root (if (ratio? root) (format " = %.3f" (float root)) ""))
+            new-r (inc r)]
+        (if (= r (count matrix))
+          (recur (str new-text "}") new-r)
+          (recur (str new-text "; ") new-r))))))
